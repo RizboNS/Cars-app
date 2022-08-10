@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
@@ -10,6 +10,7 @@ import { Car } from 'src/app/models/car.model';
 })
 export class CreateCarComponent implements OnInit {
   @Input() userId!: string
+  @Output() refreshUser = new EventEmitter()
   public carForm!: FormGroup
   public car: Car = {
     make: '',
@@ -31,7 +32,10 @@ export class CreateCarComponent implements OnInit {
   onCreate(): void {
     this.car = this.carForm.value
     this.carService.createCar(this.car, this.userId).subscribe((res) => {
-      if (res) alert('Car succesfully created')
+      if (res) {
+        // alert('Car succesfully created')
+        this.refreshUser.emit()
+      }
     })
   }
   

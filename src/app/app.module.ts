@@ -11,6 +11,7 @@ import { ErrorComponent } from './pages/error/error/error.component';
 import { CarlistComponent } from './components/car/carlist/carlist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateCarComponent } from './components/car/create-car/create-car.component';
+import { CarDetailsComponent } from './components/car/car-details/car-details.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CreateCarComponent } from './components/car/create-car/create-car.compo
     ErrorComponent,
     CarlistComponent,
     CreateCarComponent,
+    CarDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -22,14 +22,13 @@ export class UserDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.id = params['id']
     })
-
-    this.userService.getUser(this.id)
-      .subscribe((data) => {
-        this.initUser(data)
-      })
+    this.initUser()
   }
-  initUser(data: User): void {
-    this.user = data
+  initUser(): void {
+    this.userService.getUser(this.id)
+    .subscribe((data) => {
+      this.user = data
+    })
   }
   initCreateCar(): void {
     if (!this.createCar) 

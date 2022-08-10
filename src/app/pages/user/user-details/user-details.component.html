@@ -9,11 +9,11 @@
         Create car
         <button (click)="initCreateCar()">{{ createCar ? '-' : '+' }}</button>
         <div *ngIf="createCar">
-            <app-create-car [userId]="id"></app-create-car>
+            <app-create-car [userId]="id" (refreshUser)="initUser()"></app-create-car>
         </div>
     </div>
     <div *ngFor="let carId of user.cars">
-        <app-carlist [carId]=carId></app-carlist>
+        <app-carlist [carId]=carId (refreshUser)="initUser()"></app-carlist>
     </div>
 </div>
     

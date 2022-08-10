@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Car } from 'src/app/models/car.model';
 import { CarService } from 'src/app/services/car.service';
 
@@ -10,6 +10,7 @@ import { CarService } from 'src/app/services/car.service';
 })
 export class CarlistComponent implements OnInit {
   @Input() carId!: string
+  @Output() refreshUser = new EventEmitter()
   public car!: Car
   constructor(
     private carService: CarService
@@ -20,6 +21,11 @@ export class CarlistComponent implements OnInit {
       .subscribe((data) => {
         this.car = data
       })
+  }
+  onDelete() {
+    this.carService.deleteCar(this.carId).subscribe((res) => {
+      this.refreshUser.emit()
+    })
   }
 
 }

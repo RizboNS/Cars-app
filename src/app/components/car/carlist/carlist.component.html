@@ -1,8 +1,11 @@
 <hr>
 <div *ngIf="car">
-    {{car.model}}
-    {{car.make}}
-    {{car.year}}
+        <div [routerLink]="['/car', car._id]" >
+            {{car.model}}
+            {{car.make}}
+            {{car.year}}
+        </div>
+    <button (click)="onDelete()">X</button>
 </div>
 
 

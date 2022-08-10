@@ -20,6 +20,13 @@ export class CarService {
       return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car)
         .pipe(catchError(this.handleError))
   }
+  deleteCar(id: string): Observable<Car> {
+    return this.http.delete<Car>(this._urlCars + '\\' + id)
+  }
+  updateCar(id: string, car: Car): Observable<Car> {
+    return this.http.patch<Car>(this._urlCars + '\\' + id, car)
+      .pipe(catchError(this.handleError))
+  }
 
   private handleError(errorResponse: HttpErrorResponse) {
       if (errorResponse.error instanceof ErrorEvent) {
