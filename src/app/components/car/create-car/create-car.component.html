@@ -1,0 +1,21 @@
+<form [formGroup]="carForm">
+    <div>
+        <label>Maker</label>
+        <div>
+            <input formControlName="make" /> 
+        </div>
+    </div>
+    <div>
+        <label>Model</label>
+        <div>
+            <input formControlName="model" /> 
+        </div>
+    </div>
+    <div>
+        <label>Year</label>
+        <div>
+            <input formControlName="year" /> 
+        </div>
+    </div>
+    <button (click)="onCreate()">Create Car</button>
+</form>

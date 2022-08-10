@@ -1,0 +1,19 @@
+<div *ngIf="user">
+    <div>
+        User: {{ user.firstName }}, {{ user.lastName }}
+    </div>
+    <div>
+        Email: {{user.email}}
+    </div>
+    <div>
+        Create car
+        <button (click)="initCreateCar()">{{ createCar ? '-' : '+' }}</button>
+        <div *ngIf="createCar">
+            <app-create-car [userId]="id"></app-create-car>
+        </div>
+    </div>
+    <div *ngFor="let carId of user.cars">
+        <app-carlist [carId]=carId></app-carlist>
+    </div>
+</div>
+    
