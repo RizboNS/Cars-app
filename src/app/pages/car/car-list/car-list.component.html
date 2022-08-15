@@ -1,0 +1,18 @@
+<table>
+    <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Year</th>
+    </tr>
+    <tr *ngFor="let car of cars" [routerLink]="['/car', car._id]">
+        <td>
+            {{ car.make }}
+        </td>
+        <td>
+            {{ car.model }}
+        </td>
+        <td>
+            {{ car.year }}
+        </td>
+    </tr>
+</table>

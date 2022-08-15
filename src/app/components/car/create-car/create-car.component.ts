@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-car',
@@ -9,8 +10,7 @@ import { Car } from 'src/app/models/car.model';
   styleUrls: ['./create-car.component.css']
 })
 export class CreateCarComponent implements OnInit {
-  @Input() userId!: string
-  @Output() refreshUser = new EventEmitter()
+  public userId!: string
   public carForm!: FormGroup
   public car: Car = {
     make: '',
@@ -20,10 +20,15 @@ export class CreateCarComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private carService: CarService
+    private carService: CarService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.userId = params['userId']
+    })
     this.initForm()
   }
   initForm(): void {
@@ -33,8 +38,8 @@ export class CreateCarComponent implements OnInit {
     this.car = this.carForm.value
     this.carService.createCar(this.car, this.userId).subscribe((res) => {
       if (res) {
-        // alert('Car succesfully created')
-        this.refreshUser.emit()
+        alert('Car succesfully created')
+        this.router.navigate(['/car', res._id])
       }
     })
   }

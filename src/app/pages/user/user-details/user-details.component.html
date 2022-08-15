@@ -6,11 +6,7 @@
         Email: {{user.email}}
     </div>
     <div>
-        Create car
-        <button (click)="initCreateCar()">{{ createCar ? '-' : '+' }}</button>
-        <div *ngIf="createCar">
-            <app-create-car [userId]="id" (refreshUser)="initUser()"></app-create-car>
-        </div>
+        <button [routerLink]="['/create-car', id]" >Create Car</button>
     </div>
     <div *ngFor="let carId of user.cars">
         <app-carlist [carId]=carId (refreshUser)="initUser()"></app-carlist>

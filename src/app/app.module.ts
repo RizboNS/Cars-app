@@ -12,6 +12,11 @@ import { CarlistComponent } from './components/car/carlist/carlist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateCarComponent } from './components/car/create-car/create-car.component';
 import { CarDetailsComponent } from './components/car/car-details/car-details.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { CarListComponent } from './pages/car/car-list/car-list.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +28,10 @@ import { CarDetailsComponent } from './components/car/car-details/car-details.co
     CarlistComponent,
     CreateCarComponent,
     CarDetailsComponent,
+    UserListComponent,
+    CarListComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

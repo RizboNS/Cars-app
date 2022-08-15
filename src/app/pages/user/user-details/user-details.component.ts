@@ -30,11 +30,5 @@ export class UserDetailsComponent implements OnInit {
       this.user = data
     })
   }
-  initCreateCar(): void {
-    if (!this.createCar) 
-      this.createCar = true
-    else
-      this.createCar = false
-  }
 
 }

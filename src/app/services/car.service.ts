@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Car } from '../models/car.model';
 
 
@@ -13,28 +13,22 @@ export class CarService {
   constructor(
     private http: HttpClient
   ) { }
+
+  getCars() {
+    return this.http.get<Car[]>(this._urlCars)
+  }
+
   getCar(id: string): Observable<Car> {
-    return this.http.get<Car>(this._urlCars + '\\' + id).pipe(catchError(this.handleError))
+    return this.http.get<Car>(this._urlCars + '\\' + id)
   }
   createCar(car: Car, userId: string): Observable<Car> {
       return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car)
-        .pipe(catchError(this.handleError))
   }
   deleteCar(id: string): Observable<Car> {
     return this.http.delete<Car>(this._urlCars + '\\' + id)
   }
   updateCar(id: string, car: Car): Observable<Car> {
     return this.http.patch<Car>(this._urlCars + '\\' + id, car)
-      .pipe(catchError(this.handleError))
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
-      if (errorResponse.error instanceof ErrorEvent) {
-        alert('Client side error')
-      } else {
-        alert('Serrver side error')
-      }
-      return throwError(() => {})
-    }
-  
 }

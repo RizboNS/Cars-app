@@ -1,0 +1,11 @@
+<form [formGroup]="registerForm">
+    <label>Frist Name</label>
+    <input type="text" formControlName="firstName">
+    <label>Last Name</label>
+    <input type="text" formControlName="lastName">
+    <label>Email</label>
+    <input type="text" formControlName="email">
+    <label>Password</label>
+    <input type="password" formControlName="password">
+    <button (click)="onRegister()">Sign up</button>
+</form>
