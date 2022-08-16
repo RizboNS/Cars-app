@@ -39,7 +39,7 @@ export class CreateCarComponent implements OnInit {
     this.carService.createCar(this.car, this.userId).subscribe((res) => {
       if (res) {
         alert('Car succesfully created')
-        this.router.navigate(['/car', res._id])
+        this.router.navigate(['user', this.userId])
       }
     })
   }

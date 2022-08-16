@@ -18,10 +18,11 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this._url)
   }
-  register(user: {}): Observable<{}> {
-    return this.http.post<{}>(this._url + '\\' + 'register', user)
+  register(user: {}): Observable<any> {
+    return this.http.post<any>(this._url + '\\' + 'register', user)
   }
-  login(user: {}): Observable<string> {
-    return this.http.post<string>(this._url + '\\' + 'login', user)
+  login(user: {}): Observable<any> {
+    return this.http.post<any>(this._url + '\\' + 'login', user)
   }
+
 }
