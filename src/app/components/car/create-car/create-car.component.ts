@@ -4,6 +4,7 @@ import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-create-car',
   templateUrl: './create-car.component.html',
@@ -22,7 +23,7 @@ export class CreateCarComponent implements OnInit {
     private fb: FormBuilder,
     private carService: CarService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +42,10 @@ export class CreateCarComponent implements OnInit {
         alert('Car succesfully created')
         this.router.navigate(['user', this.userId])
       }
-    })
+    }, (err) => {
+        alert(err.error)
+      }
+    )
   }
   
 }

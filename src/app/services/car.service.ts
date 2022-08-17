@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Car } from '../models/car.model';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -11,7 +12,8 @@ export class CarService {
   private _urlCars: string = 'http://localhost:3000/cars'
   private _urlUsers = 'http://localhost:3000/users'
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { }
 
   getCars() {

@@ -17,5 +17,8 @@
             <input formControlName="year" /> 
         </div>
     </div>
-    <button (click)="onUpdate()">Update</button>
+    <div [routerLink]="['/user', seller]"><button>Seller Profile</button></div>
+    <div *ngIf="(authService.loggedInUserId$ | async) == seller ">
+        <button (click)="onUpdate()">Update</button>
+    </div>
 </form>

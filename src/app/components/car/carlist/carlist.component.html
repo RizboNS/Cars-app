@@ -5,7 +5,9 @@
             {{car.make}}
             {{car.year}}
         </div>
-    <button (click)="onDelete()">X</button>
+        <div *ngIf="(authService.loggedInUserId$ | async) == seller">
+            <button (click)="onDelete()">X</button>
+        </div>
 </div>
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-details',
@@ -16,6 +17,7 @@ export class UserDetailsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

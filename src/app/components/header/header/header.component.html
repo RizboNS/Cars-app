@@ -4,14 +4,19 @@
         <div>
             <a routerLink="/">Home</a>
         </div>
-        <div>
-            <a routerLink="/login">Login</a>
+        <div *ngIf="!(authService.isLoggedIn$ | async)">
+            <div>
+                <a routerLink="/login">Login</a>
+            </div>
+            <div>
+                <a routerLink="/register">Register</a>
+            </div>
         </div>
-        <div>
-            <a routerLink="/register">Register</a>
+        <div *ngIf="(authService.isLoggedIn$ | async)">
+            <a (click)="navigateToProfile()">Profile</a>
         </div>
-        <div>
-            <a [routerLink]="['/user', 1]">Profile</a>
+        <div *ngIf="(authService.isLoggedIn$ | async)">
+            <button (click)="onLogout()">Logout</button>
         </div>
     </div>
 </div>

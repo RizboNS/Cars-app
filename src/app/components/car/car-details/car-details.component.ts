@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { CarService } from 'src/app/services/car.service';
 
 @Component({
@@ -13,17 +14,20 @@ import { CarService } from 'src/app/services/car.service';
 export class CarDetailsComponent implements OnInit {
   private carId!: string
   private routeSubscription!: Subscription
+  public seller!: any
   public carForm!: FormGroup
   public car: Car = {
     make: '',
     model: '',
     year: 0,
+    seller: ''
   }
 
   constructor(
     private route: ActivatedRoute,
     private carService: CarService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +38,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.getCar(this.carId).subscribe((res) => {
       // Init form
       this.carForm = this.fb.group(res)
+      this.seller = res.seller
     })
   }
   updateId(){

@@ -5,7 +5,7 @@
     <div>
         Email: {{user.email}}
     </div>
-    <div>
+    <div *ngIf="(authService.loggedInUserId$ | async) == id">
         <button [routerLink]="['/create-car', id]" >Create Car</button>
     </div>
     <div *ngFor="let carId of user.cars">

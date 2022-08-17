@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+
+  }
+  readToken(): string {
+    return this.authService.getUserIdFromToken()
+  }
+  navigateToProfile() {
+    const userId = this.readToken()
+    if (userId != '') {
+      this.router.navigate(['user', userId])
+    }
+    else {
+      this.router.navigate(['login'])
+    }
+  }
+  onLogout(){
+    this.authService.logout()
+    this.router.navigate(['/'])
   }
 
 }
