@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CarService } from 'src/app/services/car.service';
@@ -9,9 +10,14 @@ import { CarService } from 'src/app/services/car.service';
   templateUrl: './carlist.component.html',
   styleUrls: ['./carlist.component.css']
 })
-export class CarlistComponent implements OnInit {
+export class CarlistComponent implements OnInit, OnDestroy {
   @Input() carId!: string
   @Output() refreshUser = new EventEmitter()
+
+  
+  private sub1: Subscription = new Subscription()
+  private sub2: Subscription = new Subscription()
+
   public seller!: any
   public car!: Car
   constructor(
@@ -20,16 +26,22 @@ export class CarlistComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.carService.getCar(this.carId)
+    this.initCar()
+  }
+  onDelete() {
+    this.sub1 = this.carService.deleteCar(this.carId).subscribe((res) => {
+      this.refreshUser.emit()
+    })
+  }
+  initCar() {
+    this.sub2 = this.carService.getCar(this.carId)
       .subscribe((data) => {
         this.car = data
         this.seller = data.seller
       })
   }
-  onDelete() {
-    this.carService.deleteCar(this.carId).subscribe((res) => {
-      this.refreshUser.emit()
-    })
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe()
+    this.sub2.unsubscribe()
   }
-
 }

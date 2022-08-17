@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -11,9 +11,14 @@ import { CarService } from 'src/app/services/car.service';
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.css']
 })
-export class CarDetailsComponent implements OnInit {
+export class CarDetailsComponent implements OnInit, OnDestroy {
   private carId!: string
-  private routeSubscription!: Subscription
+  private routeSubscription: Subscription = new Subscription()
+
+  private sub1: Subscription = new Subscription()
+  private sub2: Subscription = new Subscription()
+
+
   public seller!: any
   public carForm!: FormGroup
   public car: Car = {
@@ -35,7 +40,7 @@ export class CarDetailsComponent implements OnInit {
     this.getCar()
   }
   getCar(){
-    this.carService.getCar(this.carId).subscribe((res) => {
+    this.sub1 = this.carService.getCar(this.carId).subscribe((res) => {
       // Init form
       this.carForm = this.fb.group(res)
       this.seller = res.seller
@@ -51,10 +56,16 @@ export class CarDetailsComponent implements OnInit {
     this.car.model = this.carForm.value.model
     this.car.year = this.carForm.value.year
 
-    this.carService.updateCar(this.carId, this.car).subscribe((res) => {
+    this.sub2 = this.carService.updateCar(this.carId, this.car).subscribe((res) => {
       if (res)
         alert('Succes')
     })
   }
 
+
+  ngOnDestroy(): void {
+    this.sub1.unsubscribe()
+    this.sub2.unsubscribe()
+    this.routeSubscription.unsubscribe()
+  }
 }
