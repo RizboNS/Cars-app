@@ -1,0 +1,18 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+/* Pallete
+darkblue - #272343
+white - #fff
+orange - #f96d00
+*/
+.container {
+    margin: auto;
+    width: 900px;
+    max-width: 90%;
+}

@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'users' , component: UserListComponent},
   { path: 'car/:id', component: CarDetailsComponent},
   { path: 'user/:id', component: UserDetailsComponent},
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'home'},
   { path: '**', component: ErrorComponent}
 ];
 

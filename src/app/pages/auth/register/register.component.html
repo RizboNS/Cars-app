@@ -1,11 +1,23 @@
-<form [formGroup]="registerForm">
-    <label>Frist Name</label>
-    <input type="text" formControlName="firstName">
-    <label>Last Name</label>
-    <input type="text" formControlName="lastName">
-    <label>Email</label>
-    <input type="text" formControlName="email">
-    <label>Password</label>
-    <input type="password" formControlName="password">
-    <button (click)="onRegister()">Sign up</button>
-</form>
+<div class="card-container">
+    <form [formGroup]="registerForm" class="card">
+        <div class="form-group-container">
+            <label>Frist Name</label>
+            <input type="text" formControlName="firstName">
+        </div>
+        <div class="form-group-container">
+            <label>Last Name</label>
+            <input type="text" formControlName="lastName">
+        </div>
+        <div class="form-group-container">
+            <label>Email</label>
+            <input type="text" formControlName="email">
+        </div>
+        <div class="form-group-container">
+            <label>Password</label>
+            <input type="password" formControlName="password">
+        </div>
+        <div class="form-group-container">
+            <button (click)="onRegister()">Sign up</button>
+        </div>
+    </form>
+</div>
