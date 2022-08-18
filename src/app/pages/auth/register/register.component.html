@@ -17,7 +17,10 @@
             <input type="password" formControlName="password">
         </div>
         <div class="form-group-container">
-            <button (click)="onRegister()">Sign up</button>
+            <button (click)="onRegister()"
+            [disabled]="authService.requestSent$ | async"
+            [ngClass]="{'btn-dark': !(authService.requestSent$ | async),'btn-disabled': authService.requestSent$ | async}"
+            >Sign up</button>
         </div>
     </form>
 </div>

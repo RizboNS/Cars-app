@@ -15,13 +15,22 @@
     border: none;
     text-align: center;
 }
-
-.form-group-container button {
+.btn-dark {
     width: 260px;
     margin-top: 20px;
     height: 40px;
     font-size: 20px;
     background-color: #272343;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+.btn-disabled {
+    width: 260px;
+    margin-top: 20px;
+    height: 40px;
+    font-size: 20px;
+    background-color: #808080;
     color: #ffffff;
     border: none;
     cursor: pointer;

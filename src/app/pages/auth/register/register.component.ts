@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

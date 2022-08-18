@@ -13,9 +13,10 @@ export class AuthService {
   private _url: string = 'http://localhost:3000/users'
   private _loggedInUserId$ = new BehaviorSubject('')
   private _isLoggedIn$ = new BehaviorSubject(false)
+  private _requestSent$ = new BehaviorSubject(false)
   loggedInUserId$ = this._loggedInUserId$.asObservable()
   isLoggedIn$ = this._isLoggedIn$.asObservable()
-
+  requestSent$ = this._requestSent$.asObservable()
 
 
   constructor(
@@ -27,24 +28,32 @@ export class AuthService {
   }
 
   register(user: {}){
-    this.userService.register(user).subscribe((res) => {
+    this._requestSent$.next(true)
+    this.userService.register(user).subscribe({next:(res) => {
       localStorage.setItem('auth-token', res.token)
       this.tokenObj =  jwt_decode(res.token)
       this._loggedInUserId$.next(this.tokenObj._id)
       this._isLoggedIn$.next(true)
+      this._requestSent$.next(false)
       this.router.navigate(['user', this.tokenObj._id])
-    }
+    }, error: (err) => {
+      this._requestSent$.next(false)
+    }}
   )
   }
   login(user: {}) {
-    this.userService.login(user).subscribe((res) => {
+    this._requestSent$.next(true)
+    this.userService.login(user).subscribe({next:(res) => {
         localStorage.setItem('auth-token', res.token)
         this.tokenObj =  jwt_decode(res.token)
         this._isLoggedIn$.next(true)
         this._loggedInUserId$.next(this.tokenObj._id)
+        this._requestSent$.next(false)
         this.router.navigate(['user', this.tokenObj._id])
+      }, error: (err) => {
+        this._requestSent$.next(false)
       }
-    )
+    })
   }
   logout(){
     localStorage.removeItem('auth-token')
