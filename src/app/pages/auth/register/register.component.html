@@ -1,26 +1,62 @@
 <div class="card-container">
-    <form [formGroup]="registerForm" class="card">
-        <div class="form-group-container">
-            <label>Frist Name</label>
-            <input type="text" formControlName="firstName">
-        </div>
-        <div class="form-group-container">
-            <label>Last Name</label>
-            <input type="text" formControlName="lastName">
-        </div>
-        <div class="form-group-container">
-            <label>Email</label>
-            <input type="text" formControlName="email">
-        </div>
-        <div class="form-group-container">
-            <label>Password</label>
-            <input type="password" formControlName="password">
-        </div>
-        <div class="form-group-container">
-            <button (click)="onRegister()"
-            [disabled]="authService.requestSent$ | async"
-            [ngClass]="{'btn-dark': !(authService.requestSent$ | async),'btn-disabled': authService.requestSent$ | async}"
-            >Sign up</button>
-        </div>
-    </form>
+  <form [formGroup]="registerForm" class="card">
+    <div class="form-group-container">
+      <label>Frist Name</label>
+      <input
+        type="text"
+        formControlName="firstName"
+        [ngClass]="{ 'field-error': !registerForm.get('firstName')?.valid }"
+      />
+      <div class="error-msg" *ngIf="!registerForm.get('firstName')?.valid">
+        Name can't be shorter then 3 characters
+      </div>
+    </div>
+    <div class="form-group-container">
+      <label>Last Name</label>
+      <input
+        type="text"
+        formControlName="lastName"
+        [ngClass]="{ 'field-error': !registerForm.get('lastName')?.valid }"
+      />
+      <div class="error-msg" *ngIf="!registerForm.get('lastName')?.valid">
+        Last name can't be shorter then 3 characters
+      </div>
+    </div>
+    <div class="form-group-container">
+      <label>Email</label>
+      <input
+        type="text"
+        formControlName="email"
+        [ngClass]="{ 'field-error': !registerForm.get('email')?.valid }"
+      />
+      <div class="error-msg" *ngIf="!registerForm.get('email')?.valid">
+        Please enter a valid email address
+      </div>
+    </div>
+    <div class="form-group-container">
+      <label>Password</label>
+      <input
+        type="password"
+        formControlName="password"
+        [ngClass]="{ 'field-error': !registerForm.get('password')?.valid }"
+      />
+      <div class="error-msg" *ngIf="!registerForm.get('password')?.valid">
+        Password can't be shorter then 6 characters
+      </div>
+    </div>
+    <div class="form-group-container">
+      <button
+        (click)="onRegister()"
+        [disabled]="authService.requestSent$ | async"
+        [disabled]="!registerForm.valid"
+        [ngClass]="{
+          'btn-dark': !(authService.requestSent$ | async),
+          'btn-disabled':
+            (authService.requestSent$ | async) || !registerForm.valid
+        }"
+      >
+        Sign up
+      </button>
+    </div>
+  </form>
 </div>
