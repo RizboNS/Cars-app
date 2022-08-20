@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   private tokenObj!: TokenObj;
+  public submited: boolean = false;
   public user = {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, public authService: AuthService) {}
 
   ngOnInit(): void {
+    console.log(this.submited);
     this.loginForm = this.fb.group(this.user);
   }
   onLogin() {

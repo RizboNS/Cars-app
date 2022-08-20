@@ -5,9 +5,17 @@
       <input
         type="text"
         formControlName="email"
-        [ngClass]="{ 'field-error': !loginForm.get('email')?.valid }"
+        [ngClass]="{
+          'field-error':
+            !loginForm.get('email')?.valid && loginForm.get('email')?.touched
+        }"
       />
-      <div class="error-msg" *ngIf="!loginForm.get('email')?.valid">
+      <div
+        class="error-msg"
+        *ngIf="
+          !loginForm.get('email')?.valid && loginForm.get('email')?.touched
+        "
+      >
         Please enter a valid email address
       </div>
     </div>
@@ -16,9 +24,19 @@
       <input
         type="password"
         formControlName="password"
-        [ngClass]="{ 'field-error': !loginForm.get('password')?.valid }"
+        [ngClass]="{
+          'field-error':
+            !loginForm.get('password')?.valid &&
+            loginForm.get('password')?.touched
+        }"
       />
-      <div class="error-msg" *ngIf="!loginForm.get('password')?.valid">
+      <div
+        class="error-msg"
+        *ngIf="
+          !loginForm.get('password')?.valid &&
+          loginForm.get('password')?.touched
+        "
+      >
         Password can't be shorter then 6 characters
       </div>
     </div>

@@ -1,32 +1,41 @@
 <div class="header-container">
-    <div class="header">
-        <div class="header-left">
-            <!-- <div class="logo">
+  <div class="header">
+    <div class="header-left">
+      <!-- <div class="logo">
                 LOGO
             </div> -->
-            <a routerLink="/home" routerLinkActive="active">Home</a>
-    
-            <a *ngIf="(authService.isLoggedIn$ | async)"
-                [routerLink]="['/user', authService.loggedInUserId$ | async]"
-                routerLinkActive="active"
-            >
-                Profile
-            </a>
-        </div>  
-        <div class="header-right">
-                <a
-                *ngIf="!(authService.isLoggedIn$ | async)" 
-                routerLink="/login" routerLinkActive="active">Login</a>
-                <a 
-                *ngIf="!(authService.isLoggedIn$ | async)" 
-                routerLink="/register" routerLinkActive="active">Register</a>
-                <a 
-                *ngIf="(authService.isLoggedIn$ | async)"
-                (click)="onLogout()" routerLinkActive="active">Logout</a>
-        </div>
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+
+      <a
+        *ngIf="authService.isLoggedIn$ | async"
+        [routerLink]="['/user', authService.loggedInUserId$ | async]"
+        routerLinkActive="active"
+      >
+        Profile
+      </a>
     </div>
+    <div class="header-right">
+      <a
+        *ngIf="!(authService.isLoggedIn$ | async)"
+        routerLink="/login"
+        routerLinkActive="active"
+        >Login</a
+      >
+      <a
+        *ngIf="!(authService.isLoggedIn$ | async)"
+        routerLink="/register"
+        routerLinkActive="active"
+        >Register</a
+      >
+      <a
+        *ngIf="authService.isLoggedIn$ | async"
+        (click)="onLogout()"
+        routerLinkActive="active"
+        >Logout</a
+      >
+    </div>
+  </div>
 </div>
-    
 
 <!-- <div class="header">
     <a href="#default" class="logo">CompanyLogo</a>
