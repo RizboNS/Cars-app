@@ -4,33 +4,28 @@ import { Observable } from 'rxjs';
 import { Car } from '../models/car.model';
 import { AuthService } from './auth.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarService {
-  private _urlCars: string = 'http://localhost:3000/cars'
-  private _urlUsers = 'http://localhost:3000/users'
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) { }
+  private _urlCars: string = 'http://localhost:3000/cars';
+  private _urlUsers = 'http://localhost:3000/users';
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getCars() {
-    return this.http.get<Car[]>(this._urlCars)
+    return this.http.get<Car[]>(this._urlCars);
   }
 
   getCar(id: string): Observable<Car> {
-    return this.http.get<Car>(this._urlCars + '\\' + id)
+    return this.http.get<Car>(this._urlCars + '\\' + id);
   }
-  createCar(car: Car, userId: string): Observable<Car> {
-      return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car)
+  createCar(car: FormData, userId: string): Observable<Car> {
+    return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car);
   }
   deleteCar(id: string): Observable<Car> {
-    return this.http.delete<Car>(this._urlCars + '\\' + id)
+    return this.http.delete<Car>(this._urlCars + '\\' + id);
   }
   updateCar(id: string, car: Car): Observable<Car> {
-    return this.http.patch<Car>(this._urlCars + '\\' + id, car)
+    return this.http.patch<Car>(this._urlCars + '\\' + id, car);
   }
-
 }

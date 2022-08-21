@@ -1,21 +1,25 @@
 <form [formGroup]="carForm">
+  <div>
+    <label>Maker</label>
     <div>
-        <label>Maker</label>
-        <div>
-            <input formControlName="make" /> 
-        </div>
+      <input formControlName="make" />
     </div>
+  </div>
+  <div>
+    <label>Model</label>
     <div>
-        <label>Model</label>
-        <div>
-            <input formControlName="model" /> 
-        </div>
+      <input formControlName="model" />
     </div>
+  </div>
+  <div>
+    <label>Year</label>
     <div>
-        <label>Year</label>
-        <div>
-            <input formControlName="year" /> 
-        </div>
+      <input formControlName="year" />
     </div>
-    <button (click)="onCreate()">Create Car</button>
+  </div>
+  <div test>
+    <input (change)="onFileSelect($event)" type="file" multiple="multiple" />
+  </div>
+
+  <button (click)="onCreate()">Create Car</button>
 </form>
