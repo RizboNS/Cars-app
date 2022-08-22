@@ -28,4 +28,9 @@ export class CarService {
   updateCar(id: string, car: Car): Observable<Car> {
     return this.http.patch<Car>(this._urlCars + '\\' + id, car);
   }
+  getCarImage(carId: string, imageId: string): Observable<Blob> {
+    return this.http.get(`${this._urlCars}\\${carId}\\${imageId}`, {
+      responseType: 'blob',
+    });
+  }
 }

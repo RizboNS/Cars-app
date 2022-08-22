@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group(this.user);
   }
   onRegister() {
-    console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value);
   }
 }

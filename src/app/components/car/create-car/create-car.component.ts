@@ -53,7 +53,6 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     this.sub2 = this.carService.createCar(carData, this.userId).subscribe({
       next: (res) => {
         if (res) {
-          console.log(res);
           alert('Car succesfully created');
           this.router.navigate(['user', this.userId]);
         }

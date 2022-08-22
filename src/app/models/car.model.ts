@@ -3,6 +3,6 @@ export interface Car {
   model: String;
   year: Number;
   seller?: string;
-  images?: FileList[];
+  images?;
   _id?: string;
 }
