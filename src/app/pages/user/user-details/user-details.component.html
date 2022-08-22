@@ -1,15 +1,20 @@
 <div *ngIf="user" class="container">
-    <div>
-        User: {{ user.firstName }}, {{ user.lastName }}
+  <div class="card-header">
+    <div class="card-header-left">
+      <button
+        class="btn-dark"
+        [routerLink]="['/create-car', id]"
+        *ngIf="(authService.loggedInUserId$ | async) == id"
+      >
+        Create Car
+      </button>
     </div>
-    <div>
-        Email: {{user.email}}
+    <div class="card-header-right">
+      {{ user.firstName }}, {{ user.lastName }} <br />
+      {{ user.email }}
     </div>
-    <div *ngIf="(authService.loggedInUserId$ | async) == id">
-        <button [routerLink]="['/create-car', id]" >Create Car</button>
-    </div>
-    <div *ngFor="let carId of user.cars">
-        <app-carlist [carId]=carId (refreshUser)="initUser()"></app-carlist>
-    </div>
+  </div>
+  <div *ngFor="let carId of user.cars">
+    <app-carlist [carId]="carId" (refreshUser)="initUser()"></app-carlist>
+  </div>
 </div>
-    
