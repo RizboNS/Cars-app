@@ -1,2 +1,7 @@
+<div class="container">
+  <div class="container-header">TO BE HEADER FOR FILTERS</div>
 
-<app-car-list></app-car-list>
+  <div *ngFor="let car of cars">
+    <app-carlist [carId]="car._id"></app-carlist>
+  </div>
+</div>

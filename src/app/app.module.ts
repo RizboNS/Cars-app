@@ -13,11 +13,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreateCarComponent } from './components/car/create-car/create-car.component';
 import { CarDetailsComponent } from './components/car/car-details/car-details.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
-import { CarListComponent } from './pages/car/car-list/car-list.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-
+import { CarEditComponent } from './components/car/car-edit/car-edit.component';
+import { SlideshowComponent } from './components/slide/slideshow/slideshow.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +30,10 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     CreateCarComponent,
     CarDetailsComponent,
     UserListComponent,
-    CarListComponent,
     RegisterComponent,
     LoginComponent,
+    CarEditComponent,
+    SlideshowComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,9 +45,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

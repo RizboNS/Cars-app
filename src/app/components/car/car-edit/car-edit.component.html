@@ -1,0 +1,24 @@
+<form [formGroup]="carForm" *ngIf="carForm">
+  <div>
+    <label>Maker</label>
+    <div>
+      <input formControlName="make" />
+    </div>
+  </div>
+  <div>
+    <label>Model</label>
+    <div>
+      <input formControlName="model" />
+    </div>
+  </div>
+  <div>
+    <label>Year</label>
+    <div>
+      <input formControlName="year" />
+    </div>
+  </div>
+  <div [routerLink]="['/user', seller]"><button>Seller Profile</button></div>
+</form>
+<div *ngIf="(authService.loggedInUserId$ | async) == seller">
+  <button (click)="onUpdate()">Update</button>
+</div>

@@ -1,24 +1,75 @@
-<hr />
-<div *ngIf="car">
-  <div [routerLink]="['/car', car._id]">
-    {{ car.model }}
-    {{ car.make }}
-    {{ car.year }}
+<div *ngIf="car" class="card-car">
+  <div class="card-header">
+    <div class="card-header-left" [routerLink]="['/car', car._id]">
+      <ul>
+        <li>
+          {{ car.make }}
+          {{ car.model }}
+          {{ car.year }}
+        </li>
+        <li class="price">4000$</li>
+      </ul>
+    </div>
+    <div
+      class="card-header-right"
+      *ngIf="(authService.loggedInUserId$ | async) == seller"
+    >
+      <i class="fa-solid fa-trash-can trash-icon" (click)="onDelete()"></i>
+    </div>
   </div>
-  <!-- <div *ngFor="let image of imagesToShow">
-    <img [src]="image" alt="Place image title" />
-  </div> -->
-  <img
-    [src]="imagesToShow[0]"
-    alt="Place image title"
-    *ngIf="!isImageLoading; else noImageFound"
-  />
-  <ng-template #noImageFound>
-    <!-- TODO LOADING -->
-    <h1>.... LOADING ....</h1>
-    <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
-  </ng-template>
-  <div *ngIf="(authService.loggedInUserId$ | async) == seller">
-    <button (click)="onDelete()">X</button>
+  <div class="card-body" [routerLink]="['/car', car._id]">
+    <!-- <div *ngFor="let image of imagesToShow">
+      <img [src]="image" alt="Place image title" />
+    </div> -->
+    <div class="image-container">
+      <img
+        [src]="imagesToShow[0]"
+        alt="Place image title"
+        *ngIf="!isImageLoading; else noImageFound"
+      />
+    </div>
+    <div class="car-info-container">
+      <table>
+        <tr>
+          <td class="td-name">Brand</td>
+          <td class="td-value">
+            {{ car.make }}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-name">Model</td>
+          <td class="td-value">
+            {{ car.model }}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-name">Year</td>
+          <td class="td-value">
+            {{ car.year }}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-name">Price</td>
+          <td class="td-value">!!</td>
+        </tr>
+        <tr>
+          <td class="td-name">Transition Type</td>
+          <td class="td-value">!!</td>
+        </tr>
+        <tr>
+          <td class="td-name">Engine Displacement</td>
+          <td class="td-value">!!</td>
+        </tr>
+        <tr>
+          <td class="td-name">Fuel System</td>
+          <td class="td-value">!!</td>
+        </tr>
+      </table>
+    </div>
+    <ng-template #noImageFound>
+      <!-- TODO LOADING -->
+      <h1>.... LOADING ....</h1>
+      <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
+    </ng-template>
   </div>
 </div>

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
@@ -9,63 +8,82 @@ import { CarService } from 'src/app/services/car.service';
 @Component({
   selector: 'app-car-details',
   templateUrl: './car-details.component.html',
-  styleUrls: ['./car-details.component.css']
+  styleUrls: ['./car-details.component.css'],
 })
 export class CarDetailsComponent implements OnInit, OnDestroy {
-  private carId!: string
-  private routeSubscription: Subscription = new Subscription()
+  private carId!: string;
+  private routeSubscription: Subscription = new Subscription();
 
-  private sub1: Subscription = new Subscription()
-  private sub2: Subscription = new Subscription()
-
-
-  public seller!: any
-  public carForm!: FormGroup
-  public car: Car = {
-    make: '',
-    model: '',
-    year: 0,
-    seller: ''
-  }
+  private sub1: Subscription = new Subscription();
+  isImageLoading = true;
+  imagesToShow: any[] = [];
+  public editToggle: boolean = false;
+  public btnText: string = 'Edit Car';
+  public seller!: any;
+  public car: Car;
 
   constructor(
-    private route: ActivatedRoute,
     private carService: CarService,
-    private fb: FormBuilder,
-    public authService: AuthService
-  ) { }
+    public authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.updateId()
-    this.getCar()
+    this.updateId();
+    this.getCar();
   }
-  getCar(){
+  getCar() {
     this.sub1 = this.carService.getCar(this.carId).subscribe((res) => {
       // Init form
-      this.carForm = this.fb.group(res)
-      this.seller = res.seller
-    })
+      this.car = res;
+      this.seller = res.seller;
+      this.car.images.forEach((image) => {
+        this.getCarImage(this.car._id, image._id);
+      });
+    });
   }
-  updateId(){
+  updateId() {
     this.routeSubscription = this.route.params.subscribe((params) => {
-      this.carId = params['id']
-    })
+      this.carId = params['id'];
+    });
   }
-  onUpdate(){
-    this.car.make = this.carForm.value.make
-    this.car.model = this.carForm.value.model
-    this.car.year = this.carForm.value.year
-
-    this.sub2 = this.carService.updateCar(this.carId, this.car).subscribe((res) => {
-      if (res)
-        alert('Succes')
-    })
+  editCarBtnToggle() {
+    if (this.editToggle) {
+      this.editToggle = false;
+      this.btnText = 'Edit Car';
+    } else {
+      this.editToggle = true;
+      this.btnText = 'View Car';
+    }
+  }
+  getCarImage(carId, imageId) {
+    this.isImageLoading = true;
+    this.carService.getCarImage(carId, imageId).subscribe({
+      next: (res) => {
+        this.createImageFromBlob(res);
+        this.isImageLoading = false;
+      },
+      error: (error) => {
+        this.isImageLoading = false;
+      },
+    });
   }
 
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imagesToShow.push(reader.result);
+      },
+      false
+    );
 
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
   ngOnDestroy(): void {
-    this.sub1.unsubscribe()
-    this.sub2.unsubscribe()
-    this.routeSubscription.unsubscribe()
+    this.sub1.unsubscribe();
   }
 }

@@ -1,24 +1,99 @@
-<form [formGroup]="carForm" *ngIf="carForm">
-    <div>
-        <label>Maker</label>
-        <div>
-            <input formControlName="make" /> 
+<div class="container">
+  <div class="container-header">
+    <div>TO DO HEADER</div>
+    <button
+      (click)="editCarBtnToggle()"
+      *ngIf="(authService.loggedInUserId$ | async) == seller"
+    >
+      {{ btnText }}
+    </button>
+  </div>
+  <div *ngIf="!editToggle">
+    <app-slideshow
+      [imagesToShow]="imagesToShow"
+      *ngIf="!isImageLoading; else noImageFound"
+    ></app-slideshow>
+    <ng-template #noImageFound>
+      <!-- TODO LOADING -->
+      <h1>.... LOADING ....</h1>
+      <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
+    </ng-template>
+    <div class="car-body">
+      <h3>General Info</h3>
+      <div class="d-row">
+        <div class="d-name">Brand</div>
+        <div class="d-value">
+          {{ car.make }}
         </div>
-    </div>
-    <div>
-        <label>Model</label>
-        <div>
-            <input formControlName="model" /> 
+      </div>
+      <div class="d-row">
+        <div class="d-name">Model</div>
+        <div class="d-value">
+          {{ car.model }}
         </div>
-    </div>
-    <div>
-        <label>Year</label>
-        <div>
-            <input formControlName="year" /> 
+      </div>
+      <div class="d-row">
+        <div class="d-name">Year</div>
+        <div class="d-value">
+          {{ car.year }}
         </div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Color</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Millage</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Price</div>
+        <div class="d-value">!!</div>
+      </div>
+      <h3>Engine</h3>
+      <div class="d-row">
+        <div class="d-name">Fuel System</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Body Type</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Power (HP)</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Engine Displacement</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Transition Type</div>
+        <div class="d-value">!!</div>
+      </div>
+      <h3>Additional Equipment</h3>
+      <div class="d-row">
+        <div class="d-name">TO DO NGFOR LIST OF Equipment</div>
+        <div class="d-value">!!</div>
+      </div>
+      <h3>Seller</h3>
+      <div class="d-row">
+        <div class="d-name">Phone</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Email</div>
+        <div class="d-value">!!</div>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Comment</div>
+        <div class="d-value">!!</div>
+      </div>
     </div>
-    <div [routerLink]="['/user', seller]"><button>Seller Profile</button></div>
-    <div *ngIf="(authService.loggedInUserId$ | async) == seller ">
-        <button (click)="onUpdate()">Update</button>
-    </div>
-</form>
+    <!-- <div [routerLink]="['/user', seller]"><button>Seller Profile</button></div> -->
+  </div>
+  <!-- -------------------------------------------------------------------------------- -->
+  <div *ngIf="(authService.loggedInUserId$ | async) == seller && editToggle">
+    <app-car-edit></app-car-edit>
+  </div>
+</div>
