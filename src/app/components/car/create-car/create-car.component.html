@@ -7,11 +7,14 @@
       <h3>General Info</h3>
       <div class="d-row">
         <div class="d-name">Brand</div>
-        <select class="d-value" formControlName="make">
+        <select
+          class="d-value"
+          formControlName="make"
+          (change)="onBrandSelect($event)"
+        >
           <option
             *ngFor="let brand of carViewData; let i = index"
             [ngValue]="brand.name"
-            (click)="onBrandSelect(i)"
           >
             {{ brand.name }}
           </option>
@@ -28,28 +31,46 @@
       </div>
       <div class="d-row">
         <div class="d-name">Year</div>
-        <input class="d-value" />
+        <input
+          class="d-value"
+          type="number"
+          min="1900"
+          max="2022"
+          value="2022"
+        />
       </div>
       <div class="d-row">
         <div class="d-name">Color</div>
-        <input class="d-value" />
+        <select class="d-value">
+          <option *ngFor="let color of colors" [ngValue]="color">
+            {{ color }}
+          </option>
+        </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Millage</div>
-        <input class="d-value" />
+        <div class="d-name">Range Driven (KM)</div>
+        <input class="d-value" type="number" min="1" step="any" />
       </div>
       <div class="d-row">
         <div class="d-name">Price</div>
-        <input class="d-value" />
+        <input class="d-value" type="number" min="1" step="any" />
       </div>
       <h3>Engine</h3>
       <div class="d-row">
         <div class="d-name">Fuel System</div>
-        <input class="d-value" />
+        <select class="d-value">
+          <option *ngFor="let fuel of fuels" [ngValue]="fuel">
+            {{ fuel }}
+          </option>
+        </select>
       </div>
       <div class="d-row">
         <div class="d-name">Body Type</div>
-        <input class="d-value" />
+        <select class="d-value">
+          <option *ngFor="let body of bodys" [ngValue]="body">
+            {{ body }}
+          </option>
+        </select>
       </div>
       <div class="d-row">
         <div class="d-name">Power (HP)</div>

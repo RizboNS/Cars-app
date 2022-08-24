@@ -1269,3 +1269,35 @@ export const CarViewData = [
     ],
   },
 ];
+export const Colors = [
+  'White',
+  'Black',
+  'Gray',
+  'Silver',
+  'Red',
+  'Blue',
+  'Brown',
+  'Green',
+  'Beige',
+  'Orange',
+  'Gold',
+  'Yellow',
+  'Purple',
+];
+export const FuelSystem = [
+  'Gasoline',
+  'Diesel Fuel',
+  'Compressed Natural Gas (CNG)',
+  'Liquid Petroleum Gas (LPG)',
+];
+export const Bodys = [
+  'Sedan',
+  'Coupe',
+  'Limo',
+  'Sports',
+  'Station wagon',
+  'Hatchback',
+  'Convertible',
+  'SUV',
+  'Minivan',
+];

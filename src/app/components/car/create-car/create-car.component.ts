@@ -4,7 +4,12 @@ import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CarViewData } from 'src/app/assets/car-view-data';
+import {
+  Bodys,
+  CarViewData,
+  Colors,
+  FuelSystem,
+} from 'src/app/assets/car-view-data';
 
 @Component({
   selector: 'app-create-car',
@@ -18,6 +23,9 @@ export class CreateCarComponent implements OnInit, OnDestroy {
 
   carViewData = CarViewData;
   selectedModelData = [];
+  colors = Colors;
+  fuels = FuelSystem;
+  bodys = Bodys;
   private sub1: Subscription = new Subscription();
   private sub2: Subscription = new Subscription();
 
@@ -36,8 +44,10 @@ export class CreateCarComponent implements OnInit, OnDestroy {
       this.userId = params['userId'];
     });
     this.carForm = this.fb.group({
-      make: [],
-      model: [],
+      make: '',
+      model: '',
+      year: '',
+      color: '',
     });
   }
   onCreate(): void {
@@ -68,8 +78,10 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     }
   }
 
-  onBrandSelect(i: number): void {
-    this.selectedModelData = this.carViewData[i].models;
+  onBrandSelect(event): void {
+    const index = event.target.value.toString().split(':')[0];
+    // const value = event.target.value.toString().split(':')[1];
+    this.selectedModelData = this.carViewData[index].models;
   }
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
