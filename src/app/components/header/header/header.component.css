@@ -3,6 +3,7 @@
   box-shadow: 1px 3px 10px #808080;
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 .header {
   max-width: 1200px;

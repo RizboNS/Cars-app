@@ -18,6 +18,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { CarEditComponent } from './components/car/car-edit/car-edit.component';
 import { SlideshowComponent } from './components/slide/slideshow/slideshow.component';
+import { ModalImageComponent } from './components/modal/modal-image/modal-image.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SlideshowComponent } from './components/slide/slideshow/slideshow.compo
     LoginComponent,
     CarEditComponent,
     SlideshowComponent,
+    ModalImageComponent,
   ],
   imports: [
     BrowserModule,

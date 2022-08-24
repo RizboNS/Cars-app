@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-slideshow',
@@ -8,40 +9,32 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SlideshowComponent implements OnInit {
   slideIndex: number = 1;
 
-  @Input() imagesToShow: any[] = [];
-  constructor() {}
+  @Input() images: any[] = [];
+  @Input() indicators = true;
+  @Input() controls = true;
+  selectedIndex = 0;
+  constructor(public modalService: ModalService) {}
 
-  ngOnInit(): void {
-    this.showSlides(this.slideIndex);
+  ngOnInit(): void {}
+
+  selectImage(index: number): void {
+    this.selectedIndex = index;
   }
-
-  plusSlides(n) {
-    this.showSlides((this.slideIndex += n));
+  onPrevClick(): void {
+    if (this.selectedIndex === 0) {
+      this.selectedIndex = this.images.length - 1;
+    } else {
+      this.selectedIndex--;
+    }
   }
-
-  currentSlide(n) {
-    this.showSlides((this.slideIndex = n));
+  onNextClick(): void {
+    if (this.selectedIndex === this.images.length - 1) {
+      this.selectedIndex = 0;
+    } else {
+      this.selectedIndex++;
+    }
   }
-
-  showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName(
-      'mySlides'
-    ) as HTMLCollectionOf<HTMLElement>;
-    let dots = document.getElementsByClassName('dot');
-    if (n > slides.length) {
-      this.slideIndex = 1;
-    }
-    if (n < 1) {
-      this.slideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = 'none';
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(' active', '');
-    }
-    slides[this.slideIndex - 1].style.display = 'block';
-    dots[this.slideIndex - 1].className += ' active';
+  toggleImageOpen() {
+    this.modalService.toggleImageOpen();
   }
 }

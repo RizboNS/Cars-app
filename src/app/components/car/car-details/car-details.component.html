@@ -10,7 +10,7 @@
   </div>
   <div *ngIf="!editToggle">
     <app-slideshow
-      [imagesToShow]="imagesToShow"
+      [images]="imagesToShow"
       *ngIf="!isImageLoading; else noImageFound"
     ></app-slideshow>
     <ng-template #noImageFound>
