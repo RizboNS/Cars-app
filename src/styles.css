@@ -42,13 +42,13 @@ orange - #f96d00
 }
 .form-group-container input {
   height: 30px;
-  width: 258px;
+  width: 100%;
   /* border: none; */
   text-align: center;
 }
 
 .btn-dark {
-  width: 266px;
+  width: 100%;
   margin-top: 20px;
   height: 40px;
   font-size: 20px;
@@ -59,7 +59,7 @@ orange - #f96d00
   border-radius: 3px;
 }
 .btn-disabled {
-  width: 260px;
+  width: 100%;
   margin-top: 20px;
   height: 40px;
   font-size: 20px;

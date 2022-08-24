@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group(this.user);
   }
   onLogin() {
-    this.authService.login(this.loginForm.value);
+    if (this.loginForm.valid === true)
+      this.authService.login(this.loginForm.value);
   }
 }

@@ -4,6 +4,7 @@ import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CarViewData } from 'src/app/assets/car-view-data';
 
 @Component({
   selector: 'app-create-car',
@@ -14,13 +15,9 @@ export class CreateCarComponent implements OnInit, OnDestroy {
   public userId!: string;
   public carForm!: FormGroup;
   public files: string[] = [];
-  public car: Car = {
-    make: '',
-    model: '',
-    year: 2000,
-    images: [],
-  };
 
+  carViewData = CarViewData;
+  selectedModelData = [];
   private sub1: Subscription = new Subscription();
   private sub2: Subscription = new Subscription();
 
@@ -38,7 +35,10 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     this.sub1 = this.route.params.subscribe((params) => {
       this.userId = params['userId'];
     });
-    this.carForm = this.fb.group(this.car);
+    this.carForm = this.fb.group({
+      make: [],
+      model: [],
+    });
   }
   onCreate(): void {
     // this.car = this.carForm.value;
@@ -63,23 +63,14 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     });
   }
   onFileSelect(event: any) {
-    // const files = (event.target as HTMLInputElement).files;
-    // this.carForm.patchValue({ images: files });
-    // const allowedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-    // Array.from(files).forEach((file) => {
-    //   if (file && allowedMimeTypes.includes(file.type)) {
-    //     // const reader = new FileReader();
-    //     // reader.onload = () => {
-    //     //   this.imageData.push(reader.result as string);
-    //     // };
-    //     // reader.readAsDataURL(file);
-    //   }
-    // });
     for (var i = 0; i < event.target.files.length; i++) {
       this.files.push(event.target.files[i]);
     }
   }
 
+  onBrandSelect(i: number): void {
+    this.selectedModelData = this.carViewData[i].models;
+  }
   ngOnDestroy(): void {
     this.sub1.unsubscribe();
     this.sub2.unsubscribe();

@@ -13,6 +13,13 @@
       >
         Profile
       </a>
+      <a
+        [routerLink]="['/create-car', authService.loggedInUserId$ | async]"
+        *ngIf="authService.loggedInUserId$ | async"
+        routerLinkActive="active"
+      >
+        Create Car
+      </a>
     </div>
     <div class="header-right">
       <a
