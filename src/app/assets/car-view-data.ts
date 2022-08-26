@@ -1301,3 +1301,9 @@ export const Bodys = [
   'SUV',
   'Minivan',
 ];
+export const TransitionTypes = [
+  'Manual',
+  'Automatic',
+  'Continuously variable transmission',
+  'Semi-automatic',
+];

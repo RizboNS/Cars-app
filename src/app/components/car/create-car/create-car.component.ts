@@ -9,6 +9,7 @@ import {
   CarViewData,
   Colors,
   FuelSystem,
+  TransitionTypes,
 } from 'src/app/assets/car-view-data';
 
 @Component({
@@ -21,11 +22,16 @@ export class CreateCarComponent implements OnInit, OnDestroy {
   public carForm!: FormGroup;
   public files: string[] = [];
 
+  modelMsg = '';
+  imageCount: number = 0;
   carViewData = CarViewData;
   selectedModelData = [];
   colors = Colors;
   fuels = FuelSystem;
   bodys = Bodys;
+  transitionTypes = TransitionTypes;
+  equipment: string[] = [];
+  eq = '';
   private sub1: Subscription = new Subscription();
   private sub2: Subscription = new Subscription();
 
@@ -48,18 +54,43 @@ export class CreateCarComponent implements OnInit, OnDestroy {
       model: '',
       year: '',
       color: '',
+      rangeDriven: '',
+      price: '',
+      fuelSystem: '',
+      bodyType: '',
+      horsePower: '',
+      engineDisplacement: '',
+      transitionType: '',
+      equipment: [''],
+      sellerPhone: '',
+      sellerEmail: '',
+      sellerComment: '',
     });
   }
   onCreate(): void {
-    // this.car = this.carForm.value;
+    this.carForm.value.equipment = this.equipment;
+    // this.equipment.forEach((eq) => {
+    //   this.carForm.value.equipment.push(eq);
+    // });
     const carData = new FormData();
     carData.append('make', this.carForm.value.make);
     carData.append('model', this.carForm.value.model);
     carData.append('year', this.carForm.value.year);
+    carData.append('color', this.carForm.value.color);
+    carData.append('rangeDriven', this.carForm.value.rangeDriven);
+    carData.append('price', this.carForm.value.price);
+    carData.append('fuelSystem', this.carForm.value.fuelSystem);
+    carData.append('bodyType', this.carForm.value.bodyType);
+    carData.append('horsePower', this.carForm.value.horsePower);
+    carData.append('engineDisplacement', this.carForm.value.engineDisplacement);
+    carData.append('transitionType', this.carForm.value.transitionType);
+    carData.append('equipment', this.carForm.value.equipment);
+    carData.append('sellerPhone', this.carForm.value.sellerPhone);
+    carData.append('sellerEmail', this.carForm.value.sellerEmail);
+    carData.append('sellerComment', this.carForm.value.sellerComment);
     for (var i = 0; i < this.files.length; i++) {
       carData.append('images', this.files[i]);
     }
-
     this.sub2 = this.carService.createCar(carData, this.userId).subscribe({
       next: (res) => {
         if (res) {
@@ -73,15 +104,39 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     });
   }
   onFileSelect(event: any) {
-    for (var i = 0; i < event.target.files.length; i++) {
+    //     const files = (event.target as HTMLInputElement).files;
+    // this.carForm.patchValue({ images: files });
+    // const allowedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    // Array.from(files).forEach((file) => {
+    //   if (file && allowedMimeTypes.includes(file.type)) {
+    //     // const reader = new FileReader();
+    //     // reader.onload = () => {
+    //     //   this.imageData.push(reader.result as string);
+    //     // };
+    //     // reader.readAsDataURL(file);
+    //   }
+    // });
+    this.imageCount = event.target.files.length;
+    for (var i = 0; i < this.imageCount; i++) {
       this.files.push(event.target.files[i]);
     }
   }
 
   onBrandSelect(event): void {
     const index = event.target.value.toString().split(':')[0];
-    // const value = event.target.value.toString().split(':')[1];
     this.selectedModelData = this.carViewData[index].models;
+  }
+  appendEquipment() {
+    if (this.eq != '') {
+      this.equipment.push(this.eq);
+      this.eq = '';
+    }
+  }
+  removeEquipment(i: number) {
+    this.equipment.splice(i, 1);
+  }
+  changeModelMsg() {
+    this.modelMsg = 'Please select brand first.';
   }
   ngOnDestroy(): void {
     this.sub1.unsubscribe();

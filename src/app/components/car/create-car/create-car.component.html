@@ -1,12 +1,13 @@
 <div class="container">
   <div class="container-header">
-    <div>TO DO HEADER</div>
+    <div>Post new add for the Car here</div>
+    <div class="btn-close" routerLink="/home">X</div>
   </div>
   <form [formGroup]="carForm">
     <div class="car-body">
       <h3>General Info</h3>
       <div class="d-row">
-        <div class="d-name">Brand</div>
+        <label class="d-name">Brand</label>
         <select
           class="d-value"
           formControlName="make"
@@ -21,89 +22,191 @@
         </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Model</div>
-
-        <select class="d-value">
+        <label class="d-name">Model</label>
+        <label
+          class="d-value"
+          formControlName="model"
+          *ngIf="selectedModelData.length == 0"
+          (click)="changeModelMsg()"
+        >
+          {{ modelMsg }}
+        </label>
+        <select
+          class="d-value"
+          formControlName="model"
+          *ngIf="selectedModelData.length > 0"
+        >
           <option *ngFor="let model of selectedModelData" [ngValue]="model">
             {{ model }}
           </option>
         </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Year</div>
+        <label class="d-name">Year</label>
         <input
           class="d-value"
           type="number"
           min="1900"
           max="2022"
-          value="2022"
+          placeholder="2018"
+          formControlName="year"
         />
       </div>
       <div class="d-row">
-        <div class="d-name">Color</div>
-        <select class="d-value">
+        <label class="d-name">Color</label>
+        <select class="d-value" formControlName="color">
           <option *ngFor="let color of colors" [ngValue]="color">
             {{ color }}
           </option>
         </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Range Driven (KM)</div>
-        <input class="d-value" type="number" min="1" step="any" />
+        <label class="d-name">Range Driven (km)</label>
+        <input
+          class="d-value"
+          type="number"
+          min="1"
+          step="any"
+          formControlName="rangeDriven"
+          placeholder="197 000"
+        />
       </div>
       <div class="d-row">
-        <div class="d-name">Price</div>
-        <input class="d-value" type="number" min="1" step="any" />
+        <label class="d-name">Price</label>
+        <input
+          class="d-value"
+          type="number"
+          min="1"
+          step="any"
+          formControlName="price"
+          [placeholder]="3000 | currency"
+        />
       </div>
       <h3>Engine</h3>
       <div class="d-row">
-        <div class="d-name">Fuel System</div>
-        <select class="d-value">
+        <label class="d-name">Fuel System</label>
+        <select class="d-value" formControlName="fuelSystem">
           <option *ngFor="let fuel of fuels" [ngValue]="fuel">
             {{ fuel }}
           </option>
         </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Body Type</div>
-        <select class="d-value">
+        <label class="d-name">Body Type</label>
+        <select class="d-value" formControlName="bodyType">
           <option *ngFor="let body of bodys" [ngValue]="body">
             {{ body }}
           </option>
         </select>
       </div>
       <div class="d-row">
-        <div class="d-name">Power (HP)</div>
-        <input class="d-value" />
+        <label class="d-name">Power (Hp)</label>
+        <input
+          class="d-value"
+          type="number"
+          min="1"
+          formControlName="horsePower"
+          placeholder="177"
+        />
       </div>
       <div class="d-row">
-        <div class="d-name">Engine Displacement</div>
-        <input class="d-value" />
+        <label class="d-name">Engine Displacement (cc)</label>
+        <input
+          class="d-value"
+          type="number"
+          min="1"
+          formControlName="engineDisplacement"
+          placeholder="1995"
+        />
       </div>
       <div class="d-row">
-        <div class="d-name">Transition Type</div>
-        <input class="d-value" />
+        <label class="d-name">Transition Type</label>
+        <select class="d-value" formControlName="transitionType">
+          <option
+            *ngFor="let transitionType of transitionTypes"
+            [ngValue]="transitionType"
+          >
+            {{ transitionType }}
+          </option>
+        </select>
       </div>
       <h3>Additional Equipment</h3>
       <div class="d-row">
-        <div class="d-name">TO DO NGFOR LIST OF Equipment</div>
-        <input class="d-value" />
+        <label class="d-name">Equipment</label>
+        <div class="d-value inp-btn-wrapper">
+          <input
+            class="d-value inp-box"
+            type="text"
+            [(ngModel)]="eq"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="e.g. Winter tires"
+          />
+          <div (click)="appendEquipment()" class="btn-box">+</div>
+        </div>
       </div>
+      <div class="d-row" *ngFor="let equip of equipment; let i = index">
+        <label class="d-value eq-value">
+          {{ equip }}
+        </label>
+        <div class="d-name btn-container">
+          <div class="btn-remove" (click)="removeEquipment(i)">-</div>
+        </div>
+      </div>
+
       <h3>Seller</h3>
       <div class="d-row">
-        <div class="d-name">Phone</div>
-        <input class="d-value" />
+        <label class="d-name">Phone</label>
+        <input
+          class="d-value"
+          type="text"
+          formControlName="sellerPhone"
+          placeholder="xxx xxx-xxxx"
+        />
       </div>
       <div class="d-row">
-        <div class="d-name">Email</div>
-        <input class="d-value" />
+        <label class="d-name">Email</label>
+        <input
+          class="d-value"
+          type="email"
+          formControlName="sellerEmail"
+          placeholder="email@domain.com"
+        />
+      </div>
+      <div class="d-row no-line">
+        <label class="d-name max-width">Comment</label>
       </div>
       <div class="d-row">
-        <div class="d-name">Comment</div>
-        <input class="d-value" />
+        <textarea
+          class="d-value max-width"
+          formControlName="sellerComment"
+        ></textarea>
+      </div>
+      <div class="d-row no-line">
+        <div class="d-name">Upload Images</div>
+        <label class="d-value upload-box" for="file-upload">
+          Browse
+          <input
+            id="file-upload"
+            (change)="onFileSelect($event)"
+            type="file"
+            multiple="multiple"
+          />
+        </label>
+      </div>
+      <div class="d-row">
+        <div class="d-name">Selected images</div>
+        <div class="d-value">
+          {{ imageCount }}
+        </div>
+      </div>
+      <div class="d-row no-line">
+        <div class="d-name">
+          <button class="btn-dark warn" routerLink="/home">Cancel</button>
+        </div>
+        <div class="d-value">
+          <button class="btn-dark" (click)="onCreate()">Create Car</button>
+        </div>
       </div>
     </div>
-
-    <button (click)="onCreate()">Create Car</button>
   </form>
 </div>

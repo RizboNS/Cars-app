@@ -23,7 +23,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
   public car: Car = {
     make: '',
     model: '',
-    year: 0,
+    year: '',
     seller: '',
   };
   constructor(
