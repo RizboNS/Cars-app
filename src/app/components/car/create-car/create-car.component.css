@@ -167,3 +167,7 @@ textarea {
 input[type="file"] {
   display: none;
 }
+.field-error {
+  border: 1px solid red;
+  color: red;
+}

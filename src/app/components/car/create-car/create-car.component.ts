@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +22,7 @@ export class CreateCarComponent implements OnInit, OnDestroy {
   public carForm!: FormGroup;
   public files: string[] = [];
 
+  errMsg = '';
   modelMsg = '';
   imageCount: number = 0;
   carViewData = CarViewData;
@@ -50,28 +51,26 @@ export class CreateCarComponent implements OnInit, OnDestroy {
       this.userId = params['userId'];
     });
     this.carForm = this.fb.group({
-      make: '',
-      model: '',
-      year: '',
-      color: '',
-      rangeDriven: '',
-      price: '',
-      fuelSystem: '',
-      bodyType: '',
-      horsePower: '',
-      engineDisplacement: '',
-      transitionType: '',
-      equipment: [''],
-      sellerPhone: '',
-      sellerEmail: '',
-      sellerComment: '',
+      make: ['', [Validators.required]],
+      model: ['', [Validators.required]],
+      year: ['', [Validators.required]],
+      color: ['', [Validators.required]],
+      rangeDriven: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      fuelSystem: ['', [Validators.required]],
+      bodyType: ['', [Validators.required]],
+      horsePower: ['', [Validators.required]],
+      engineDisplacement: ['', [Validators.required]],
+      transitionType: ['', [Validators.required]],
+      equipment: '',
+      sellerPhone: ['', [Validators.required]],
+      sellerEmail: ['', [Validators.required, Validators.email]],
+      sellerComment: ['', [Validators.required]],
     });
   }
   onCreate(): void {
+    this.errMsg = '';
     this.carForm.value.equipment = this.equipment;
-    // this.equipment.forEach((eq) => {
-    //   this.carForm.value.equipment.push(eq);
-    // });
     const carData = new FormData();
     carData.append('make', this.carForm.value.make);
     carData.append('model', this.carForm.value.model);
@@ -88,6 +87,7 @@ export class CreateCarComponent implements OnInit, OnDestroy {
     carData.append('sellerPhone', this.carForm.value.sellerPhone);
     carData.append('sellerEmail', this.carForm.value.sellerEmail);
     carData.append('sellerComment', this.carForm.value.sellerComment);
+
     for (var i = 0; i < this.files.length; i++) {
       carData.append('images', this.files[i]);
     }
@@ -99,7 +99,7 @@ export class CreateCarComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        alert(err.error);
+        this.errMsg = err.error;
       },
     });
   }

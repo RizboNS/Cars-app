@@ -51,6 +51,8 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     if (this.editToggle) {
       this.editToggle = false;
       this.btnText = 'Edit Car';
+      this.updateId();
+      this.getCar();
     } else {
       this.editToggle = true;
       this.btnText = 'View Car';

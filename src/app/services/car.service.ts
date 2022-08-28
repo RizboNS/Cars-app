@@ -19,13 +19,13 @@ export class CarService {
   getCar(id: string): Observable<Car> {
     return this.http.get<Car>(this._urlCars + '\\' + id);
   }
-  createCar(car: FormData, userId: string): Observable<Car> {
-    return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car);
-  }
   deleteCar(id: string): Observable<Car> {
     return this.http.delete<Car>(this._urlCars + '\\' + id);
   }
-  updateCar(id: string, car: Car): Observable<Car> {
+  createCar(car: FormData, userId: string): Observable<Car> {
+    return this.http.post<Car>(this._urlUsers + '\\' + userId + '\\cars', car);
+  }
+  updateCar(id: string, car: FormData): Observable<Car> {
     return this.http.patch<Car>(this._urlCars + '\\' + id, car);
   }
   getCarImage(carId: string, imageId: string): Observable<Blob> {

@@ -1,4 +1,4 @@
-<form [formGroup]="carForm" *ngIf="carForm">
+<!-- <form [formGroup]="carForm" *ngIf="carForm">
   <div>
     <label>Maker</label>
     <div>
@@ -21,4 +21,296 @@
 </form>
 <div *ngIf="(authService.loggedInUserId$ | async) == seller">
   <button (click)="onUpdate()">Update</button>
-</div>
+</div> -->
+
+<form
+  [formGroup]="carForm"
+  (keydown.enter)="$event.preventDefault()"
+  *ngIf="carForm"
+>
+  <div class="car-body">
+    <h3>General Info</h3>
+    <div class="d-row">
+      <label class="d-name">Brand</label>
+      <select
+        class="d-value"
+        formControlName="make"
+        (change)="onBrandSelect($event)"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('make')?.valid && carForm.get('make')?.touched
+        }"
+      >
+        <option
+          *ngFor="let brand of carViewData; let i = index"
+          [ngValue]="brand.name"
+        >
+          {{ brand.name }}
+        </option>
+      </select>
+    </div>
+    <div class="d-row">
+      <label class="d-name">Model</label>
+      <select
+        class="d-value"
+        formControlName="model"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('model')?.valid && carForm.get('model')?.touched
+        }"
+      >
+        <option *ngFor="let model of selectedModelData" [ngValue]="model">
+          {{ model }}
+        </option>
+      </select>
+    </div>
+    <div class="d-row">
+      <label class="d-name">Year</label>
+      <input
+        class="d-value"
+        type="number"
+        min="1900"
+        max="2022"
+        placeholder="2018"
+        formControlName="year"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('year')?.valid && carForm.get('year')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row">
+      <label class="d-name">Color</label>
+      <select
+        class="d-value"
+        formControlName="color"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('color')?.valid && carForm.get('color')?.touched
+        }"
+      >
+        <option *ngFor="let color of colors" [ngValue]="color">
+          {{ color }}
+        </option>
+      </select>
+    </div>
+    <div class="d-row">
+      <label class="d-name">Range Driven (km)</label>
+      <input
+        class="d-value"
+        type="number"
+        min="1"
+        step="any"
+        formControlName="rangeDriven"
+        placeholder="197000"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('rangeDriven')?.valid &&
+            carForm.get('rangeDriven')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row">
+      <label class="d-name">Price</label>
+      <input
+        class="d-value"
+        type="number"
+        min="1"
+        step="any"
+        formControlName="price"
+        [placeholder]="3000 | currency"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('price')?.valid && carForm.get('price')?.touched
+        }"
+      />
+    </div>
+    <h3>Engine</h3>
+    <div class="d-row">
+      <label class="d-name">Fuel System</label>
+      <select
+        class="d-value"
+        formControlName="fuelSystem"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('fuelSystem')?.valid &&
+            carForm.get('fuelSystem')?.touched
+        }"
+      >
+        <option *ngFor="let fuel of fuels" [ngValue]="fuel">
+          {{ fuel }}
+        </option>
+      </select>
+    </div>
+    <div class="d-row">
+      <label class="d-name">Body Type</label>
+      <select
+        class="d-value"
+        formControlName="bodyType"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('bodyType')?.valid && carForm.get('bodyType')?.touched
+        }"
+      >
+        <option *ngFor="let body of bodys" [ngValue]="body">
+          {{ body }}
+        </option>
+      </select>
+    </div>
+    <div class="d-row">
+      <label class="d-name">Power (Hp)</label>
+      <input
+        class="d-value"
+        type="number"
+        min="1"
+        formControlName="horsePower"
+        placeholder="177"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('horsePower')?.valid &&
+            carForm.get('horsePower')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row">
+      <label class="d-name">Engine Displacement (cc)</label>
+      <input
+        class="d-value"
+        type="number"
+        min="1"
+        formControlName="engineDisplacement"
+        placeholder="1995"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('engineDisplacement')?.valid &&
+            carForm.get('engineDisplacement')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row">
+      <label class="d-name">Transition Type</label>
+      <select
+        class="d-value"
+        formControlName="transitionType"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('transitionType')?.valid &&
+            carForm.get('transitionType')?.touched
+        }"
+      >
+        <option
+          *ngFor="let transitionType of transitionTypes"
+          [ngValue]="transitionType"
+        >
+          {{ transitionType }}
+        </option>
+      </select>
+    </div>
+    <h3>Additional Equipment</h3>
+    <div class="d-row">
+      <label class="d-name">Equipment</label>
+      <div class="d-value inp-btn-wrapper">
+        <input
+          class="d-value inp-box"
+          type="text"
+          [(ngModel)]="eq"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="e.g. Winter tires"
+        />
+        <div (click)="appendEquipment()" class="btn-box">+</div>
+      </div>
+    </div>
+    <div class="d-row" *ngFor="let equip of equipment; let i = index">
+      <label class="d-value eq-value">
+        {{ equip }}
+      </label>
+      <div class="d-name btn-container">
+        <div class="btn-remove" (click)="removeEquipment(i)">-</div>
+      </div>
+    </div>
+
+    <h3>Seller</h3>
+    <div class="d-row">
+      <label class="d-name">Phone</label>
+      <input
+        class="d-value"
+        type="text"
+        formControlName="sellerPhone"
+        placeholder="xxx xxx-xxxx"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('sellerPhone')?.valid &&
+            carForm.get('sellerPhone')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row">
+      <label class="d-name">Email</label>
+      <input
+        class="d-value"
+        type="email"
+        formControlName="sellerEmail"
+        placeholder="email@domain.com"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('sellerEmail')?.valid &&
+            carForm.get('sellerEmail')?.touched
+        }"
+      />
+    </div>
+    <div class="d-row no-line">
+      <label class="d-name max-width">Comment</label>
+    </div>
+    <div class="d-row">
+      <textarea
+        class="d-value max-width"
+        formControlName="sellerComment"
+        [ngClass]="{
+          'field-error':
+            !carForm.get('sellerComment')?.valid &&
+            carForm.get('sellerComment')?.touched
+        }"
+      ></textarea>
+    </div>
+    <div class="d-row no-line">
+      <div class="d-name">Upload Images</div>
+      <label class="d-value upload-box" for="file-upload">
+        Browse
+        <input
+          id="file-upload"
+          (change)="onFileSelect($event)"
+          type="file"
+          multiple="multiple"
+        />
+      </label>
+    </div>
+    <div class="d-row no-line field-error" *ngIf="errMsg != ''">
+      {{ errMsg }}
+    </div>
+
+    <div class="d-row" *ngIf="imageCount > 0">
+      <div class="d-name">Selected images</div>
+      <div class="d-value">
+        {{ imageCount }}
+      </div>
+    </div>
+    <div class="d-row no-line">
+      <div class="d-name">
+        <button class="btn-dark warn" routerLink="/home">Cancel</button>
+      </div>
+      <div class="d-value">
+        <button
+          class="btn-dark"
+          (click)="onUpdate()"
+          [disabled]="!carForm.valid"
+          [ngClass]="{
+            'btn-disabled': !carForm.valid,
+            'btn-dark': carForm.valid
+          }"
+        >
+          Update Car
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
