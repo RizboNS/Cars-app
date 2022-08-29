@@ -171,3 +171,8 @@ input[type="file"] {
   border: 1px solid red;
   color: red;
 }
+.delete-tag {
+  max-width: 740px;
+  display: flex;
+  justify-content: flex-end;
+}

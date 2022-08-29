@@ -8,6 +8,11 @@
 </div> -->
 
 <div *ngIf="images && images.length > 0" class="carousel-container">
+  <i
+    *ngIf="isParrentCarEdit"
+    class="fa-solid fa-trash-can trash-icon"
+    (click)="emmitTriggerDelete()"
+  ></i>
   <img
     *ngFor="let image of images; let i = index"
     [src]="image"

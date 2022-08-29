@@ -33,4 +33,8 @@ export class CarService {
       responseType: 'blob',
     });
   }
+  removeCarImage(carId: string, imageFileName: string) {
+    console.log(`${this._urlCars}\\${carId}\\${imageFileName}`);
+    return this.http.delete(`${this._urlCars}\\${carId}\\${imageFileName}`);
+  }
 }

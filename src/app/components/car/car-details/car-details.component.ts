@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CarService } from 'src/app/services/car.service';
+import { ImagesService } from 'src/app/services/images.service';
 
 @Component({
   selector: 'app-car-details',
@@ -25,10 +26,13 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private carService: CarService,
     public authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private imagesService: ImagesService
   ) {}
 
   ngOnInit(): void {
+    this.imagesToShow = [];
+    this.imagesService.resetSelectedImageIndex();
     this.updateId();
     this.getCar();
   }
@@ -51,11 +55,11 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     if (this.editToggle) {
       this.editToggle = false;
       this.btnText = 'Edit Car';
-      this.updateId();
-      this.getCar();
+      this.ngOnInit();
     } else {
       this.editToggle = true;
       this.btnText = 'View Car';
+      this.ngOnInit();
     }
   }
   getCarImage(carId, imageId) {

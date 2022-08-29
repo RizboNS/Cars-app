@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -12,6 +18,7 @@ import {
 import { Car } from 'src/app/models/car.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CarService } from 'src/app/services/car.service';
+import { ImagesService } from 'src/app/services/images.service';
 
 @Component({
   selector: 'app-car-edit',
@@ -22,13 +29,19 @@ export class CarEditComponent implements OnInit, OnDestroy {
   private carId!: string;
   private routeSubscription: Subscription = new Subscription();
 
+  @Output() triggerEdditTogle = new EventEmitter();
+
   private sub1: Subscription = new Subscription();
   private sub2: Subscription = new Subscription();
+
+  isImageLoading = true;
+  imagesToShow: any[] = [];
 
   public files: string[] = [];
   errMsg = '';
   modelMsg = '';
   imageCount: number = 0;
+  imagesInfo = [];
   carViewData = CarViewData;
   selectedModelData = [];
   colors = Colors;
@@ -44,12 +57,16 @@ export class CarEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private carService: CarService,
     private fb: FormBuilder,
-    public authService: AuthService
+    public authService: AuthService,
+    public imagesService: ImagesService
   ) {}
 
   ngOnInit(): void {
     this.updateId();
     this.getCar();
+  }
+  emmitTrigerEditTogle() {
+    this.triggerEdditTogle.emit();
   }
   getCar() {
     this.sub1 = this.carService.getCar(this.carId).subscribe((res) => {
@@ -73,6 +90,10 @@ export class CarEditComponent implements OnInit, OnDestroy {
       this.equipment = res.equipment;
       this.onModelLoad(res.make);
       this.seller = res.seller;
+      res.images.forEach((image) => {
+        this.getCarImage(res._id, image._id);
+        this.imagesInfo.push(image.fileName);
+      });
     });
   }
   updateId() {
@@ -114,7 +135,8 @@ export class CarEditComponent implements OnInit, OnDestroy {
     // carFormData.forEach((el) => console.log('el: ', el));
     this.sub2 = this.carService.updateCar(this.carId, carFormData).subscribe({
       next: (res) => {
-        if (res) alert('Succes');
+        if (res) alert('Succesfully edited car add.');
+        this.emmitTrigerEditTogle();
       },
       error: (err) => {
         this.errMsg = err.error;
@@ -162,6 +184,47 @@ export class CarEditComponent implements OnInit, OnDestroy {
   }
   changeModelMsg() {
     this.modelMsg = 'Please select brand first.';
+  }
+  getCarImage(carId, imageId) {
+    this.isImageLoading = true;
+    this.carService.getCarImage(carId, imageId).subscribe({
+      next: (res) => {
+        this.createImageFromBlob(res);
+        this.isImageLoading = false;
+      },
+      error: (error) => {
+        this.isImageLoading = false;
+      },
+    });
+  }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imagesToShow.push(reader.result);
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+  removeImage() {
+    const selectedImageFileName: string =
+      this.imagesInfo[this.imagesService.selectedImageIndex];
+    this.carService
+      .removeCarImage(this.carId, selectedImageFileName)
+      .subscribe({
+        next: (res) => {
+          this.imagesToShow.splice(this.imagesService.selectedImageIndex, 1);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    // console.log(this.imagesInfo[this.imagesService.selectedImageIndex]);
   }
   ngOnDestroy(): void {
     this.sub1.unsubscribe();

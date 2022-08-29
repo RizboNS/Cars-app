@@ -22,7 +22,21 @@
 <div *ngIf="(authService.loggedInUserId$ | async) == seller">
   <button (click)="onUpdate()">Update</button>
 </div> -->
+<app-slideshow
+  (triggerDelete)="removeImage()"
+  [isParrentCarEdit]="true"
+  [images]="imagesToShow"
+  *ngIf="!isImageLoading; else noImageFound"
+></app-slideshow>
 
+<ng-template #noImageFound>
+  <!-- TODO LOADING -->
+  <h1>.... LOADING ....</h1>
+  <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
+</ng-template>
+<!-- <button (click)="removeImage()">
+  INDEX: {{ imagesService.selectedImageIndex }}
+</button> -->
 <form
   [formGroup]="carForm"
   (keydown.enter)="$event.preventDefault()"

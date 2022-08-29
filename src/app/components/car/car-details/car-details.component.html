@@ -96,6 +96,6 @@
   </div>
   <!-- -------------------------------------------------------------------------------- -->
   <div *ngIf="(authService.loggedInUserId$ | async) == seller && editToggle">
-    <app-car-edit></app-car-edit>
+    <app-car-edit (triggerEdditTogle)="editCarBtnToggle()"></app-car-edit>
   </div>
 </div>
