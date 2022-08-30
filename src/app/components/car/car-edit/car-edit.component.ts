@@ -219,6 +219,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.imagesToShow.splice(this.imagesService.selectedImageIndex, 1);
+          this.imagesInfo.splice(this.imagesService.selectedImageIndex, 1);
         },
         error: (err) => {
           console.log(err);

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container-header">
-    <div>TO DO HEADER</div>
+    <div>{{ title }}</div>
     <button
       (click)="editCarBtnToggle()"
       *ngIf="(authService.loggedInUserId$ | async) == seller"
@@ -14,9 +14,14 @@
       *ngIf="!isImageLoading; else noImageFound"
     ></app-slideshow>
     <ng-template #noImageFound>
-      <!-- TODO LOADING -->
-      <h1>.... LOADING ....</h1>
-      <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
+      <div class="loading-image-container">
+        <img
+          src="../../../assets/LoadingImage.jpg"
+          alt="Fallbackimage"
+          class="loading-img"
+        />
+        <div class="no-image">...IMAGE WAS NOT FOUND...</div>
+      </div>
     </ng-template>
     <div class="car-body">
       <h3>General Info</h3>

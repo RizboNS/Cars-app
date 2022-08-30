@@ -1,42 +1,20 @@
-<!-- <form [formGroup]="carForm" *ngIf="carForm">
-  <div>
-    <label>Maker</label>
-    <div>
-      <input formControlName="make" />
-    </div>
-  </div>
-  <div>
-    <label>Model</label>
-    <div>
-      <input formControlName="model" />
-    </div>
-  </div>
-  <div>
-    <label>Year</label>
-    <div>
-      <input formControlName="year" />
-    </div>
-  </div>
-  <div [routerLink]="['/user', seller]"><button>Seller Profile</button></div>
-</form>
-<div *ngIf="(authService.loggedInUserId$ | async) == seller">
-  <button (click)="onUpdate()">Update</button>
-</div> -->
 <app-slideshow
   (triggerDelete)="removeImage()"
   [isParrentCarEdit]="true"
   [images]="imagesToShow"
   *ngIf="!isImageLoading; else noImageFound"
 ></app-slideshow>
-
 <ng-template #noImageFound>
-  <!-- TODO LOADING -->
-  <h1>.... LOADING ....</h1>
-  <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
+  <div class="loading-image-container">
+    <img
+      src="../../../assets/LoadingImage.jpg"
+      alt="Fallbackimage"
+      class="loading-img"
+    />
+    <div class="no-image">...IMAGE WAS NOT FOUND...</div>
+  </div>
 </ng-template>
-<!-- <button (click)="removeImage()">
-  INDEX: {{ imagesService.selectedImageIndex }}
-</button> -->
+
 <form
   [formGroup]="carForm"
   (keydown.enter)="$event.preventDefault()"

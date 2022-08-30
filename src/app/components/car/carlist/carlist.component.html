@@ -7,7 +7,7 @@
           {{ car.model }}
           {{ car.year }}
         </li>
-        <li class="price">4000$</li>
+        <li class="price">{{ car.price | currency }}</li>
       </ul>
     </div>
     <div
@@ -18,15 +18,22 @@
     </div>
   </div>
   <div class="card-body" [routerLink]="['/car', car._id]">
-    <!-- <div *ngFor="let image of imagesToShow">
-      <img [src]="image" alt="Place image title" />
-    </div> -->
     <div class="image-container">
       <img
         [src]="imagesToShow[0]"
         alt="Place image title"
         *ngIf="!isImageLoading; else noImageFound"
       />
+      <ng-template #noImageFound>
+        <div class="loading-image-container">
+          <img
+            src="../../../assets/LoadingImage.jpg"
+            alt="Fallbackimage"
+            class="loading-img"
+          />
+          <div class="no-image">...IMAGE WAS NOT FOUND...</div>
+        </div>
+      </ng-template>
     </div>
     <div class="car-info-container">
       <table>
@@ -50,26 +57,21 @@
         </tr>
         <tr>
           <td class="td-name">Price</td>
-          <td class="td-value">!!</td>
+          <td class="td-value">{{ car.price | currency }}</td>
         </tr>
         <tr>
           <td class="td-name">Transition Type</td>
-          <td class="td-value">!!</td>
+          <td class="td-value">{{ car.transitionType }}</td>
         </tr>
         <tr>
           <td class="td-name">Engine Displacement</td>
-          <td class="td-value">!!</td>
+          <td class="td-value">{{ car.engineDisplacement }}</td>
         </tr>
         <tr>
           <td class="td-name">Fuel System</td>
-          <td class="td-value">!!</td>
+          <td class="td-value">{{ car.fuelSystem }}</td>
         </tr>
       </table>
     </div>
-    <ng-template #noImageFound>
-      <!-- TODO LOADING -->
-      <h1>.... LOADING ....</h1>
-      <!-- <img src="fallbackImage.png" alt="Fallbackimage" /> -->
-    </ng-template>
   </div>
 </div>

@@ -16,6 +16,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   private routeSubscription: Subscription = new Subscription();
 
   private sub1: Subscription = new Subscription();
+  title: string = 'Car details - View';
   isImageLoading = true;
   imagesToShow: any[] = [];
   public editToggle: boolean = false;
@@ -55,10 +56,12 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     if (this.editToggle) {
       this.editToggle = false;
       this.btnText = 'Edit Car';
+      this.title = 'Car details - View';
       this.ngOnInit();
     } else {
       this.editToggle = true;
       this.btnText = 'View Car';
+      this.title = 'Car details - Edit';
       this.ngOnInit();
     }
   }
