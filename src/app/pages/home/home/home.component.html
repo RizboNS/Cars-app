@@ -1,31 +1,61 @@
 <div class="container">
   <div class="container-header">
-    TO BE HEADER FOR FILTERS
-    <button (click)="sortByPriceDesc()">Sort By Price - Descending</button>
-    <button (click)="sortByPriceAsc()">Sort By Price - Ascending</button>
-    <button (click)="sortByYearDesc()">Sort By Year - Newest</button>
-    <button (click)="sortByYearAsc()">Sort By Year - Oldest</button>
-    <label class="d-name">Brand</label>
-    <select
-      class="d-value"
-      (change)="filterByMake($event)"
-      (change)="onBrandSelect($event)"
-    >
-      <option
-        *ngFor="let brand of carViewData; let i = index"
-        [ngValue]="brand.name"
-      >
-        {{ brand.name }}
-      </option>
-    </select>
-    <label class="d-name">Model</label>
-    <select class="d-value" (change)="filterByModel($event)">
-      <option *ngFor="let model of selectedModelData" [ngValue]="model">
-        {{ model }}
-      </option>
-    </select>
+    <!-- TO BE HEADER FOR FILTERS -->
+    <div class="sort">
+      <h3>Sort by</h3>
+      <div>
+        <ul>
+          <li>
+            <div (click)="sortByPriceDesc()">Price - Descending</div>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <div (click)="sortByPriceAsc()">Price - Ascending</div>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <div (click)="sortByYearDesc()">Year - Newest</div>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <div (click)="sortByYearAsc()">Year - Oldest</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="filter">
+      <h3>Filter by</h3>
+      <div>
+        <label class="d-name">Brand</label>
+        <select
+          class="d-value"
+          (change)="filterByMake($event)"
+          (change)="onBrandSelect($event)"
+        >
+          <option
+            *ngFor="let brand of carViewData; let i = index"
+            [ngValue]="brand.name"
+          >
+            {{ brand.name }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="d-name">Model</label>
+        <select class="d-value" (change)="filterByModel($event)">
+          <option *ngFor="let model of selectedModelData" [ngValue]="model">
+            {{ model }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
-  <div *ngFor="let car of cars">
-    <app-carlist [carId]="car._id"></app-carlist>
+  <div class="container-body">
+    <div *ngFor="let car of cars" class="car-container">
+      <app-carlist [carId]="car._id"></app-carlist>
+    </div>
   </div>
 </div>

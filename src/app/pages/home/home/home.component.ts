@@ -12,16 +12,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   public carsOriginal: Car[] = [];
   public cars: Car[] = [];
   carViewData = CarViewData;
-  selectedModelData = [];
+  selectedModelData = ['All'];
   private sub1: Subscription = new Subscription();
   constructor(private carService: CarService) {}
 
   ngOnInit(): void {
     this.initCars();
-    this.carViewData.unshift({
-      name: 'All',
-      models: [],
-    });
+    if (this.carViewData[0].name != 'All') {
+      this.carViewData.unshift({
+        name: 'All',
+        models: [],
+      });
+    }
   }
   initCars() {
     this.sub1 = this.carService.getCars().subscribe((res) => {
@@ -31,58 +33,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   sortByYearDesc() {
     this.cars.sort((a, b) => {
-      let fa = a.year;
-      let fb = b.year;
-      if (fa < fb) {
-        return 1;
-      }
-
-      if (fa > fb) {
-        return -1;
-      }
-      return 0;
+      return parseInt(b.year) - parseInt(a.year);
     });
   }
   sortByYearAsc() {
     this.cars.sort((a, b) => {
-      let fa = a.year;
-      let fb = b.year;
-      if (fa < fb) {
-        return -1;
-      }
-
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
+      return parseInt(a.year) - parseInt(b.year);
     });
   }
   sortByPriceDesc() {
     this.cars.sort((a, b) => {
-      let fa = a.price;
-      let fb = b.price;
-      if (fa < fb) {
-        return 1;
-      }
-
-      if (fa > fb) {
-        return -1;
-      }
-      return 0;
+      return parseInt(b.price) - parseInt(a.price);
     });
   }
   sortByPriceAsc() {
     this.cars.sort((a, b) => {
-      let fa = a.price;
-      let fb = b.price;
-      if (fa < fb) {
-        return -1;
-      }
-
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
+      return parseInt(a.price) - parseInt(b.price);
     });
   }
   filterByMake(event: any) {
